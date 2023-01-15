@@ -1,22 +1,28 @@
+version: "3.9"
 services:
   database:
-    image: "postgres:14"
+    image: postgres:14
     environment:
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: postgres
     ports:
-      - "5432:5432"
+      - 5432:5432
     volumes:
-      - database-data:/var/lib/postgresql/data/
+      - crud-db:/var/lib/docker/volumes/crud-db/_data
+      - ./src/db-restore/nodegmp-base.sql:/docker-entrypoint-initdb.d/nodegmp-base.sql
   app:
     build: .
     depends_on:
       - database
     ports:
-      - 3000:3003
+    - target: 3000
+      host_ip: 127.0.0.1
+      published: 3003
+      protocol: tcp
+      mode: host
     environment:
       DB_USER: postgres
       DB_PASSWORD: postgres
-      DB_HOST: postgres
-      DB_PORT: 5432
-
+      DB_HOST: database
+volumes:
+  crud-db:

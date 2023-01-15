@@ -50,12 +50,9 @@ GroupModel.belongsToMany(UserModel, {
   hooks: true,
 });
 
-UserGroup.sync().catch(
-  (error) => console.error(error),
-);
-
-GroupModel.sync().catch(
-  (error) => console.error(error),
-);
+UserModel.sync()
+    .then(() => GroupModel.sync())
+    .then(() => UserGroup.sync())
+    .catch((error) => console.error(error));
 
 export default GroupModel;

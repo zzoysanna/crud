@@ -29,19 +29,16 @@ UserModel.init(
       allowNull: false,
     },
     age: {
-      type: DataTypes.NUMBER,
+      type: DataTypes.INTEGER,
       allowNull: false,
     },
   },
   {
+    freezeTableName: true,
     timestamps: false,
     tableName: 'users',
     sequelize: sequelizeConnection,
   },
-);
-
-UserModel.sync().catch(
-  (error) => console.error(error),
 );
 
 export default UserModel;
