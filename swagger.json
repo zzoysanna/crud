@@ -1,0 +1,357 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "description": "Description",
+    "version": "1.0.0",
+    "title": "My API"
+  },
+  "host": "localhost:3000",
+  "basePath": "/",
+  "tags": [
+    {
+      "name": "user",
+      "description": "Operations with users"
+    },
+    {
+      "name": "group",
+      "description": "Operations with groups"
+    }
+  ],
+  "schemes": [
+    "http"
+  ],
+  "paths": {
+    "/api/": {
+      "get": {
+        "summary": "Fast api test",
+        "description": "Fast api test",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "Hello from server!"
+          }
+        }
+      }
+    },
+    "/api/auth/": {
+      "post": {
+        "summary": "Authorization",
+        "description": "Authorization",
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "required": false,
+            "schema": {
+              "$ref": "#/definitions/AuthData"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "401": {
+            "description": "Unauthorized"
+          }
+        }
+      }
+    },
+    "/api/users/create": {
+      "post": {
+        "tags": [
+          "user"
+        ],
+        "summary": "Create a user",
+        "description": "Create a user",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/users/user/{id}": {
+      "get": {
+        "tags": [
+          "user"
+        ],
+        "summary": "Create a user",
+        "description": "Create a user",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "user"
+        ],
+        "summary": "Edit user",
+        "description": "Edit user",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "user"
+        ],
+        "summary": "Delete user",
+        "description": "Delete user",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/users/search": {
+      "get": {
+        "tags": [
+          "user"
+        ],
+        "summary": "Search users by name",
+        "description": "Search users by name",
+        "parameters": [
+          {
+            "name": "loginSubstring",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "limit",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/groups/create": {
+      "post": {
+        "tags": [
+          "group"
+        ],
+        "summary": "Create group",
+        "description": "Create group",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/groups/group/{id}": {
+      "get": {
+        "tags": [
+          "group"
+        ],
+        "summary": "Get group by id",
+        "description": "Get group by id",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "group"
+        ],
+        "summary": "Edit group",
+        "description": "Edit group",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "group"
+        ],
+        "summary": "Delete group",
+        "description": "Delete group",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/groups/getAll": {
+      "get": {
+        "tags": [
+          "group"
+        ],
+        "summary": "Get all groups",
+        "description": "Get all groups",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/groups/addUsersToGroup": {
+      "post": {
+        "tags": [
+          "group"
+        ],
+        "summary": "Add users to group",
+        "description": "Add users to group",
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "required": false,
+            "schema": {
+              "$ref": "#/definitions/UserGroup"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    }
+  },
+  "definitions": {
+    "User": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "example": "1"
+        },
+        "login": {
+          "type": "string",
+          "example": "theUser"
+        },
+        "password": {
+          "type": "string",
+          "example": "password"
+        },
+        "age": {
+          "type": "integer",
+          "format": "int64",
+          "example": 10
+        },
+        "isDeleted": {
+          "type": "boolean",
+          "example": false
+        }
+      }
+    },
+    "Group": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "example": "123-456-789"
+        },
+        "name": {
+          "type": "string",
+          "example": "test"
+        },
+        "permissions": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "AuthData": {
+      "type": "object",
+      "properties": {
+        "userName": {
+          "type": "string",
+          "example": "testname"
+        },
+        "password": {
+          "type": "string",
+          "example": "testpass"
+        }
+      }
+    },
+    "UserGroup": {
+      "type": "object",
+      "properties": {
+        "groupId": {
+          "type": "string",
+          "example": "62fb31e3-8ac9-46fe-a759-44eb779b9e78"
+        },
+        "userIds": {
+          "type": "array",
+          "items": {
+            "type": "integer"
+          }
+        }
+      }
+    }
+  }
+}

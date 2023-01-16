@@ -8,10 +8,16 @@ const subroutes = express.Router();
 
 subroutes.get(
     '/',
-    (req, res) => res.send('Hello from server!')
+    (req, res) => {
+        res.send('Hello from server!')
+    }
 );
 subroutes.use('/auth', authRouter);
-subroutes.use('/users', authorizeHandler, userRouter);
-subroutes.use('/groups', authorizeHandler, groupRouter);
+subroutes.use('/users', userRouter);
+subroutes.use('/groups', groupRouter);
+
+// Authorize switched off for rest purposes
+// subroutes.use('/users', authorizeHandler, userRouter);
+// subroutes.use('/groups', authorizeHandler, groupRouter);
 
 export default subroutes;
