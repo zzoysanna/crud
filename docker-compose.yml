@@ -20,6 +20,11 @@ services:
       published: 3003
       protocol: tcp
       mode: host
+    - target: 3355
+      host_ip: 127.0.0.1
+      published: 3355
+      protocol: tcp
+      mode: host
     environment:
       DB_USER: postgres
       DB_PASSWORD: postgres
