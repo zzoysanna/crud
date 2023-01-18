@@ -1,0 +1,329 @@
+openapi: 3.0.1
+info:
+  title: My API
+  description: Description
+  version: 1.0.0
+servers:
+- url: http://localhost:3003/
+- url: http://localhost:3000/
+tags:
+- name: user
+  description: Operations with users
+- name: group
+  description: Operations with groups
+paths:
+  /api/:
+    get:
+      summary: Fast api test
+      description: Fast api test
+      responses:
+        200:
+          description: Hello from server!
+          content: {}
+  /api/auth/:
+    post:
+      summary: Authorization
+      description: Authorization
+      requestBody:
+        content:
+          '*/*':
+            schema:
+              $ref: '#/components/schemas/AuthData'
+        required: false
+      responses:
+        200:
+          description: OK
+          content: {}
+        401:
+          description: Unauthorized
+          content: {}
+      x-codegen-request-body-name: body
+  /api/users/create:
+    post:
+      tags:
+      - user
+      summary: Create a user
+      description: Create a user
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                password:
+                  type: string
+                login:
+                  type: string
+                age:
+                  type: integer
+            examples:
+              '0':
+                value: |-
+                  {
+                      "login": "testname",
+                      "password": "testpass",
+                      "age": 90
+                  }
+      responses:
+        200:
+          description: OK
+          content: {}
+  /api/users/user/{id}:
+    get:
+      tags:
+      - user
+      summary: Get user by id
+      description: Get user by id
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        200:
+          description: OK
+          content: {}
+    put:
+      tags:
+      - user
+      summary: Edit user
+      description: Edit user
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                password:
+                  type: string
+                login:
+                  type: string
+                age:
+                  type: integer
+            examples:
+              '0':
+                value: |-
+                  {
+                      "login": "anna",
+                      "password": "2131sdfdsf",
+                      "age": 28
+                  }    
+      responses:
+        200:
+          description: OK
+          content: {}
+    delete:
+      tags:
+      - user
+      summary: Delete user
+      description: Delete user
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        200:
+          description: OK
+          content: {}
+  /api/users/search:
+    get:
+      tags:
+      - user
+      summary: Search users by name
+      description: Search users by name
+      parameters:
+      - name: loginSubstring
+        in: query
+        schema:
+          type: string
+      - name: limit
+        in: query
+        schema:
+          type: string
+      responses:
+        200:
+          description: OK
+          content: {}
+  /api/groups/create:
+    post:
+      tags:
+      - group
+      summary: Create group
+      description: Create group
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                permissions:
+                  type: array
+                  items:
+                    type: string
+                name:
+                  type: string
+            examples:
+              '0':
+                value: |-
+                  {
+                      "name": "developers",
+                      "permissions": ["READ", "WRITE", "DELETE", "SHARE"]
+                  }
+      responses:
+        200:
+          description: OK
+          content: {}
+  /api/groups/group/{id}:
+    get:
+      tags:
+      - group
+      summary: Get group by id
+      description: Get group by id
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        200:
+          description: OK
+          content: {}
+    put:
+      tags:
+      - group
+      summary: Edit group
+      description: Edit group
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                permissions:
+                  type: array
+                  items:
+                    type: string
+                name:
+                  type: string
+            examples:
+              '0':
+                value: |-
+                  {
+                      "name": "testers",
+                      "permissions": ["READ", "WRITE"]
+                  }    
+      responses:
+        200:
+          description: OK
+          content: {}
+    delete:
+      tags:
+      - group
+      summary: Delete group
+      description: Delete group
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        200:
+          description: OK
+          content: {}
+  /api/groups/getAll:
+    get:
+      tags:
+      - group
+      summary: Get all groups
+      description: Get all groups
+      responses:
+        200:
+          description: OK
+          content: {}
+  /api/groups/addUsersToGroup:
+    post:
+      tags:
+      - group
+      summary: Add users to group
+      description: Add users to group
+      requestBody:
+        content:
+          '*/*':
+            schema:
+              $ref: '#/components/schemas/UserGroup'
+        required: false
+      responses:
+        200:
+          description: OK
+          content: {}
+      x-codegen-request-body-name: body
+components:
+  schemas:
+    User:
+      type: object
+      properties:
+        id:
+          type: string
+          example: "1"
+        login:
+          type: string
+          example: theUser
+        password:
+          type: string
+          example: password
+        age:
+          type: integer
+          format: int64
+          example: 10
+        isDeleted:
+          type: boolean
+          example: false
+    Group:
+      type: object
+      properties:
+        id:
+          type: string
+          example: 123-456-789
+        name:
+          type: string
+          example: test
+        permissions:
+          type: array
+          items:
+            type: string
+    AuthData:
+      type: object
+      properties:
+        userName:
+          type: string
+          example: testname
+        password:
+          type: string
+          example: testpass
+    UserGroup:
+      type: object
+      properties:
+        groupId:
+          type: string
+          example: 62fb31e3-8ac9-46fe-a759-44eb779b9e78
+        userIds:
+          type: array
+          items:
+            type: integer

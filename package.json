@@ -10,7 +10,7 @@
     "lint": "npx eslint src --fix",
     "test": "jest",
     "swagger-autogen": "node ./swagger.js",
-    "swagger": "open-swagger-ui ./swagger.json --open"
+    "swagger": "open-swagger-ui ./swagger.yaml --open"
   },
   "repository": {
     "type": "git",

@@ -25,7 +25,7 @@ SET default_table_access_method = heap;
 CREATE database nodegmp;
 
 
-CREATE TABLE public.users (
+CREATE TABLE IF NOT EXISTS public.users (
     id integer NOT NULL,
     login character varying NOT NULL,
     password character varying NOT NULL,
@@ -41,7 +41,7 @@ ALTER TABLE public.users ALTER COLUMN id ADD GENERATED ALWAYS AS IDENTITY (
     CACHE 1
 );
 
-CREATE TABLE public.groups (
+CREATE TABLE IF NOT EXISTS public.groups (
     id uuid NOT NULL,
     name text NOT NULL,
     permissions text[] NOT NULL
@@ -49,7 +49,7 @@ CREATE TABLE public.groups (
 
 ALTER TABLE public.groups OWNER TO postgres;
 
-CREATE TABLE public.user_groups (
+CREATE TABLE IF NOT EXISTS public.user_groups (
     "UserModelId" integer NOT NULL,
     "GroupModelId" uuid NOT NULL
 );

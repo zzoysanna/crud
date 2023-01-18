@@ -1,12 +1,18 @@
 {
-  "swagger": "2.0",
+  "openapi": "3.0.1",
   "info": {
+    "title": "My API",
     "description": "Description",
-    "version": "1.0.0",
-    "title": "My API"
+    "version": "1.0.0"
   },
-  "host": "localhost:3000",
-  "basePath": "/",
+  "servers": [
+    {
+      "url": "http://localhost:3003/"
+    },
+    {
+      "url": "http://localhost:3000/"
+    }
+  ],
   "tags": [
     {
       "name": "user",
@@ -17,18 +23,15 @@
       "description": "Operations with groups"
     }
   ],
-  "schemes": [
-    "http"
-  ],
   "paths": {
     "/api/": {
       "get": {
         "summary": "Fast api test",
         "description": "Fast api test",
-        "parameters": [],
         "responses": {
           "200": {
-            "description": "Hello from server!"
+            "description": "Hello from server!",
+            "content": {}
           }
         }
       }
@@ -37,24 +40,27 @@
       "post": {
         "summary": "Authorization",
         "description": "Authorization",
-        "parameters": [
-          {
-            "in": "body",
-            "name": "body",
-            "required": false,
-            "schema": {
-              "$ref": "#/definitions/AuthData"
+        "requestBody": {
+          "content": {
+            "*/*": {
+              "schema": {
+                "$ref": "#/components/schemas/AuthData"
+              }
             }
-          }
-        ],
+          },
+          "required": false
+        },
         "responses": {
           "200": {
-            "description": "OK"
+            "description": "OK",
+            "content": {}
           },
           "401": {
-            "description": "Unauthorized"
+            "description": "Unauthorized",
+            "content": {}
           }
-        }
+        },
+        "x-codegen-request-body-name": "body"
       }
     },
     "/api/users/create": {
@@ -64,10 +70,35 @@
         ],
         "summary": "Create a user",
         "description": "Create a user",
-        "parameters": [],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "password": {
+                    "type": "string"
+                  },
+                  "login": {
+                    "type": "string"
+                  },
+                  "age": {
+                    "type": "integer"
+                  }
+                }
+              },
+              "examples": {
+                "0": {
+                  "value": "{\n    \"login\": \"testname\",\n    \"password\": \"testpass\",\n    \"age\": 90\n}"
+                }
+              }
+            }
+          }
+        },
         "responses": {
           "200": {
-            "description": "OK"
+            "description": "OK",
+            "content": {}
           }
         }
       }
@@ -77,19 +108,22 @@
         "tags": [
           "user"
         ],
-        "summary": "Create a user",
-        "description": "Create a user",
+        "summary": "Get user by id",
+        "description": "Get user by id",
         "parameters": [
           {
             "name": "id",
             "in": "path",
             "required": true,
-            "type": "string"
+            "schema": {
+              "type": "string"
+            }
           }
         ],
         "responses": {
           "200": {
-            "description": "OK"
+            "description": "OK",
+            "content": {}
           }
         }
       },
@@ -104,12 +138,40 @@
             "name": "id",
             "in": "path",
             "required": true,
-            "type": "string"
+            "schema": {
+              "type": "string"
+            }
           }
         ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "password": {
+                    "type": "string"
+                  },
+                  "login": {
+                    "type": "string"
+                  },
+                  "age": {
+                    "type": "integer"
+                  }
+                }
+              },
+              "examples": {
+                "0": {
+                  "value": "{\n    \"login\": \"anna\",\n    \"password\": \"2131sdfdsf\",\n    \"age\": 28\n}    "
+                }
+              }
+            }
+          }
+        },
         "responses": {
           "200": {
-            "description": "OK"
+            "description": "OK",
+            "content": {}
           }
         }
       },
@@ -124,12 +186,15 @@
             "name": "id",
             "in": "path",
             "required": true,
-            "type": "string"
+            "schema": {
+              "type": "string"
+            }
           }
         ],
         "responses": {
           "200": {
-            "description": "OK"
+            "description": "OK",
+            "content": {}
           }
         }
       }
@@ -145,19 +210,22 @@
           {
             "name": "loginSubstring",
             "in": "query",
-            "required": false,
-            "type": "string"
+            "schema": {
+              "type": "string"
+            }
           },
           {
             "name": "limit",
             "in": "query",
-            "required": false,
-            "type": "string"
+            "schema": {
+              "type": "string"
+            }
           }
         ],
         "responses": {
           "200": {
-            "description": "OK"
+            "description": "OK",
+            "content": {}
           }
         }
       }
@@ -169,10 +237,35 @@
         ],
         "summary": "Create group",
         "description": "Create group",
-        "parameters": [],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "permissions": {
+                    "type": "array",
+                    "items": {
+                      "type": "string"
+                    }
+                  },
+                  "name": {
+                    "type": "string"
+                  }
+                }
+              },
+              "examples": {
+                "0": {
+                  "value": "{\n    \"name\": \"developers\",\n    \"permissions\": [\"READ\", \"WRITE\", \"DELETE\", \"SHARE\"]\n}"
+                }
+              }
+            }
+          }
+        },
         "responses": {
           "200": {
-            "description": "OK"
+            "description": "OK",
+            "content": {}
           }
         }
       }
@@ -189,12 +282,15 @@
             "name": "id",
             "in": "path",
             "required": true,
-            "type": "string"
+            "schema": {
+              "type": "string"
+            }
           }
         ],
         "responses": {
           "200": {
-            "description": "OK"
+            "description": "OK",
+            "content": {}
           }
         }
       },
@@ -209,12 +305,40 @@
             "name": "id",
             "in": "path",
             "required": true,
-            "type": "string"
+            "schema": {
+              "type": "string"
+            }
           }
         ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "permissions": {
+                    "type": "array",
+                    "items": {
+                      "type": "string"
+                    }
+                  },
+                  "name": {
+                    "type": "string"
+                  }
+                }
+              },
+              "examples": {
+                "0": {
+                  "value": "{\n    \"name\": \"testers\",\n    \"permissions\": [\"READ\", \"WRITE\"]\n}    "
+                }
+              }
+            }
+          }
+        },
         "responses": {
           "200": {
-            "description": "OK"
+            "description": "OK",
+            "content": {}
           }
         }
       },
@@ -229,12 +353,15 @@
             "name": "id",
             "in": "path",
             "required": true,
-            "type": "string"
+            "schema": {
+              "type": "string"
+            }
           }
         ],
         "responses": {
           "200": {
-            "description": "OK"
+            "description": "OK",
+            "content": {}
           }
         }
       }
@@ -246,10 +373,10 @@
         ],
         "summary": "Get all groups",
         "description": "Get all groups",
-        "parameters": [],
         "responses": {
           "200": {
-            "description": "OK"
+            "description": "OK",
+            "content": {}
           }
         }
       }
@@ -261,94 +388,98 @@
         ],
         "summary": "Add users to group",
         "description": "Add users to group",
-        "parameters": [
-          {
-            "in": "body",
-            "name": "body",
-            "required": false,
-            "schema": {
-              "$ref": "#/definitions/UserGroup"
+        "requestBody": {
+          "content": {
+            "*/*": {
+              "schema": {
+                "$ref": "#/components/schemas/UserGroup"
+              }
             }
-          }
-        ],
+          },
+          "required": false
+        },
         "responses": {
           "200": {
-            "description": "OK"
+            "description": "OK",
+            "content": {}
           }
-        }
+        },
+        "x-codegen-request-body-name": "body"
       }
     }
   },
-  "definitions": {
-    "User": {
-      "type": "object",
-      "properties": {
-        "id": {
-          "type": "string",
-          "example": "1"
-        },
-        "login": {
-          "type": "string",
-          "example": "theUser"
-        },
-        "password": {
-          "type": "string",
-          "example": "password"
-        },
-        "age": {
-          "type": "integer",
-          "format": "int64",
-          "example": 10
-        },
-        "isDeleted": {
-          "type": "boolean",
-          "example": false
-        }
-      }
-    },
-    "Group": {
-      "type": "object",
-      "properties": {
-        "id": {
-          "type": "string",
-          "example": "123-456-789"
-        },
-        "name": {
-          "type": "string",
-          "example": "test"
-        },
-        "permissions": {
-          "type": "array",
-          "items": {
-            "type": "string"
+  "components": {
+    "schemas": {
+      "User": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "example": "1"
+          },
+          "login": {
+            "type": "string",
+            "example": "theUser"
+          },
+          "password": {
+            "type": "string",
+            "example": "password"
+          },
+          "age": {
+            "type": "integer",
+            "format": "int64",
+            "example": 10
+          },
+          "isDeleted": {
+            "type": "boolean",
+            "example": false
           }
         }
-      }
-    },
-    "AuthData": {
-      "type": "object",
-      "properties": {
-        "userName": {
-          "type": "string",
-          "example": "testname"
-        },
-        "password": {
-          "type": "string",
-          "example": "testpass"
+      },
+      "Group": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "example": "123-456-789"
+          },
+          "name": {
+            "type": "string",
+            "example": "test"
+          },
+          "permissions": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          }
         }
-      }
-    },
-    "UserGroup": {
-      "type": "object",
-      "properties": {
-        "groupId": {
-          "type": "string",
-          "example": "62fb31e3-8ac9-46fe-a759-44eb779b9e78"
-        },
-        "userIds": {
-          "type": "array",
-          "items": {
-            "type": "integer"
+      },
+      "AuthData": {
+        "type": "object",
+        "properties": {
+          "userName": {
+            "type": "string",
+            "example": "testname"
+          },
+          "password": {
+            "type": "string",
+            "example": "testpass"
+          }
+        }
+      },
+      "UserGroup": {
+        "type": "object",
+        "properties": {
+          "groupId": {
+            "type": "string",
+            "example": "62fb31e3-8ac9-46fe-a759-44eb779b9e78"
+          },
+          "userIds": {
+            "type": "array",
+            "items": {
+              "type": "integer"
+            }
           }
         }
       }
